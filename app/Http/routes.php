@@ -18,8 +18,10 @@ Route::get('/', function(){
 
 Route::get('/home', [
 	'as' => '/', function () {
-    return 'Work in progress..';
+    return App\User::with('company')->first();
 }]);
+
+Route::get('/profile', 'ProfileController@index');
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');

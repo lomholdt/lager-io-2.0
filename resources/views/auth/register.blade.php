@@ -4,29 +4,43 @@
 
 <form method="POST" action="/auth/register">
     {!! csrf_field() !!}
+	
+	@if (count($errors) > 0)
+		<div class="alert alert-danger">
+			<ul>
+				@foreach($errors->all() as $error)
+					<li>{{ $error }}</li>
+				@endforeach
+			</ul>
+		</div>
+	@endif
 
-    <div>
-        Name
-        <input type="text" name="name" value="{{ old('name') }}">
+    <div class="form-group">
+        <input type="text" name="name" value="{{ old('name') }}" class="form-control" placeholder="Name">
+    </div>
+
+    <div class="form-group">
+    	<select name="company_id" id="inputCompany_id" class="form-control">
+    		@foreach($companies as $company)
+    			<option value="{{$company->id}}">{{ $company->name }}</option>
+    		@endforeach
+    	</select>
+    </div>
+
+    <div class="form-group">
+        <input type="email" name="email" value="{{ old('email') }}" placeholder="Email" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <input type="password" name="password" class="form-control" placeholder="Password">
+    </div>
+
+    <div class="form-group">
+        <input type="password" name="password_confirmation" class="form-control" placeholder="Confirm Password">
     </div>
 
     <div>
-        Email
-        <input type="email" name="email" value="{{ old('email') }}">
-    </div>
-
-    <div>
-        Password
-        <input type="password" name="password">
-    </div>
-
-    <div>
-        Confirm Password
-        <input type="password" name="password_confirmation">
-    </div>
-
-    <div>
-        <button type="submit">Register</button>
+        <button type="submit" class="btn btn-primary">Register</button>
     </div>
 </form>
 

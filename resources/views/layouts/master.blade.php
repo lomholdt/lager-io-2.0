@@ -10,7 +10,7 @@
 	<title>Document</title>
 </head>
 <body>
-	@include('nav.nav')
+	@include('layouts.partials.nav')
 	<div class="container">
 		@yield('content')
 	</div>
