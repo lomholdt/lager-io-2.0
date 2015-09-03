@@ -7,22 +7,16 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
 
-class ProfileController extends Controller
+class StorageController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-    
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index()
+    public function index($storageName)
     {
-        return View('profile')->with('user', \Auth::user());
+        return \App\Storage::where('name', $storageName)->firstOrFail();
     }
 
     /**

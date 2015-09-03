@@ -12,4 +12,9 @@ class Storage extends Model
     {
     	return $this->belongsTo('App\Company');
     }
+
+    public function inventory()
+    {
+    	return $this->hasMany('App\Inventory');
+    }
 }

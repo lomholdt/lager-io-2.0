@@ -18,15 +18,23 @@ Route::get('/', function(){
 
 Route::get('/home', [
 	'as' => '/', function () {
-    	return App\User::with('company')->first();
+    	// return App\User::with('company')->first();
+    	return view('home');
 }]);
 
 Route::get('/test', function () {
-    return App\Storage::where('is_open', false)->with('company')->get();
+    // return App\Storage::where('is_open', false)->with('company')->get();
+	$storage = App\Storage::find(1);
+	// return $storage->company->name;
+	return $storage->inventory;
 });
 
 
+// Storage Routes
+Route::resource('storage/{storageName}', 'StorageController');
 
+
+// Profile routes
 Route::get('/profile', 'ProfileController@index');
 
 // Authentication routes...
