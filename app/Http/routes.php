@@ -18,8 +18,14 @@ Route::get('/', function(){
 
 Route::get('/home', [
 	'as' => '/', function () {
-    return App\User::with('company')->first();
+    	return App\User::with('company')->first();
 }]);
+
+Route::get('/test', function () {
+    return App\Storage::where('is_open', false)->with('company')->get();
+});
+
+
 
 Route::get('/profile', 'ProfileController@index');
 

@@ -8,7 +8,13 @@ class Company extends Model
 {
     protected $table = 'companies';
 
-    public function user(){
+    public function users()
+    {
     	return $this->belongsToMany('App\User');
+    }
+
+    public function storage()
+    {
+    	return $this->belongsToMany('App\Storage');
     }
 }
