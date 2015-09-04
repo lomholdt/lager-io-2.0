@@ -5,15 +5,7 @@
 <form method="POST" action="/auth/login">
     {!! csrf_field() !!}
 	
-	@if (count($errors) > 0)
-		<div class="alert alert-danger">
-			<ul>
-				@foreach($errors->all() as $error)
-					<li>{{ $error }}</li>
-				@endforeach
-			</ul>
-		</div>
-	@endif
+    @include('errors.error')
 
     <div class="form-group">
     	<input type="text" name="company" id="inputCompany" class="form-control" value="" title="" placeholder="Company">

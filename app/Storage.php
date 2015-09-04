@@ -8,6 +8,10 @@ class Storage extends Model
 {
 	protected $table = 'storages';
 
+	protected $fillable = [
+		'name'
+	];
+
     public function company()
     {
     	return $this->belongsTo('App\Company');

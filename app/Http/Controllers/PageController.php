@@ -4,26 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-use App\Http\Requests\StorageRequest;
+use App\Http\Requests;
 use App\Http\Controllers\Controller;
 use App\Storage;
 
-class StorageController extends Controller
+class PageController extends Controller
 {
-
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index($storageName)
+    public function index()
     {
-        return \App\Storage::all();
+        $storages = Storage::where('company_id', \Auth::user()->company_id)->get();
+        return view('home', compact('storages'));
     }
 
     /**
@@ -33,7 +28,7 @@ class StorageController extends Controller
      */
     public function create()
     {
-        return view('storages.create');
+        //
     }
 
     /**
@@ -42,28 +37,20 @@ class StorageController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(StorageRequest $request)
+    public function store(Request $request)
     {
-        $storage = new Storage;
-        $storage->name = $request->name;
-        $storage->company_id = $request->user()->id;
-        $storage->save();
-
-        return redirect()->to('/storage/'.$request->name);
+        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $name
+     * @param  int  $id
      * @return Response
      */
-    public function show($name)
+    public function show($id)
     {
-        $name = str_replace('-', ' ', $name);
-        $storage = \App\Storage::where(compact('name', 'id'))->first();
-        // return $storage;
-        return view('storage.show', compact('storage'));
+        //
     }
 
     /**

@@ -11,14 +11,13 @@
 |
 */
 
-Route::get('/', function(){
-	return view('home');
+Route::resource('/', 'PageController');
 
-});
+// Storage Routes
+Route::resource('storage', 'StorageController');
 
 Route::get('/home', [
 	'as' => '/', function () {
-    	// return App\User::with('company')->first();
     	return view('home');
 }]);
 
@@ -30,8 +29,6 @@ Route::get('/test', function () {
 });
 
 
-// Storage Routes
-Route::resource('storage/{storageName}', 'StorageController');
 
 
 // Profile routes
