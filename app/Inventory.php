@@ -8,6 +8,8 @@ class Inventory extends Model
 {
 
 	protected $table = 'inventory';
+
+	protected $fillable = ['name', 'storage_id'];
     
     public function storage()
     {

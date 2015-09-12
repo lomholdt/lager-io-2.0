@@ -14,10 +14,11 @@ class CreateInventoryTable extends Migration
     {
         Schema::create('inventory', function(Blueprint $table) {
             $table->increments('id');
-            $table->string('name');
+            $table->string('name')->required();
             $table->double('units');
-            $table->integer('storage_id');
-            $table->double('price');
+            $table->integer('storage_id')->references('id')->on('storages')->onDelete('cascade');
+            $table->double('salesPrice');
+            $table->double('retailPrice');
             $table->timestamps();
         });
     }

@@ -6,23 +6,29 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\InventoryRequest;
 use App\Storage;
+use App\Inventory;
+use App\User;
 
-class PageController extends Controller
+class InventoryController extends Controller
 {
+
     public function __construct()
     {
         $this->middleware('auth');
     }
+
     /**
      * Display a listing of the resource.
      *
      * @return Response
      */
-    public function index()
+    public function index($name)
     {
-        $storages = Storage::where('company_id', \Auth::user()->company_id)->get();
-        return view('home', compact('storages'));
+        $storage = Storage::where(compact(['name', 'company_id']))->first();
+        return $storage->with('inventory')->get();
+        // return Inventory::where('storage_id', $storage->id)->get();
     }
 
     /**
@@ -30,9 +36,10 @@ class PageController extends Controller
      *
      * @return Response
      */
-    public function create()
+    public function create($name)
     {
-        //
+        $storage = Storage::where(compact(['name', 'company_id']))->first();
+        return view('inventory.create')->with('storage', $storage);
     }
 
     /**
@@ -41,9 +48,14 @@ class PageController extends Controller
      * @param  Request  $request
      * @return Response
      */
-    public function store(Request $request)
-    {
-        //
+    public function store(InventoryRequest $request, $name)
+    {   
+        $inventory = new Inventory;
+        $inventory->name = $request->name;
+        $inventory->storage_id = Storage::where('name', $name)->where('company_id', \Auth::user()->company->id)->first()->id;
+        $inventory->save();
+
+        return redirect()->back();
     }
 
     /**

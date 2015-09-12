@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\StorageRequest;
 use App\Http\Controllers\Controller;
 use App\Storage;
+use App\Inventory;
 
 class StorageController extends Controller
 {
@@ -21,9 +22,9 @@ class StorageController extends Controller
      *
      * @return Response
      */
-    public function index($storageName)
+    public function index()
     {
-        return \App\Storage::all();
+        return Storage::where('company_id', \Auth::user()->company_id)->get();
     }
 
     /**
@@ -33,7 +34,7 @@ class StorageController extends Controller
      */
     public function create()
     {
-        return view('storages.create');
+        return view('storage.create');
     }
 
     /**
@@ -60,9 +61,8 @@ class StorageController extends Controller
      */
     public function show($name)
     {
-        $name = str_replace('-', ' ', $name);
-        $storage = \App\Storage::where(compact('name', 'id'))->first();
-        // return $storage;
+        $name = strtolower(str_replace('-', ' ', $name));
+        $storage = Storage::where(compact('name', 'id'))->first();
         return view('storage.show', compact('storage'));
     }
 
@@ -72,9 +72,10 @@ class StorageController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function edit($id)
+    public function edit($name)
     {
-        //
+        $storage = Storage::where(compact('name', 'id'))->first();
+        return view('storage.edit', compact('storage'));
     }
 
     /**
@@ -84,9 +85,19 @@ class StorageController extends Controller
      * @param  int  $id
      * @return Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
-        //
+        $input = $request->input('inventory');
+        foreach ($input as $id => $value) {
+            // TODO Validate inventory belongs to users company
+            $inventory = Inventory::findOrFail($id);
+            $inventory->name = $value['name'];
+            $inventory->units = $value['units'];
+            $inventory->salesPrice = $value['salesPrice'];
+            $inventory->retailPrice = $value['retailPrice'];
+            $inventory->save();
+        }
+        return redirect()->to('/storage/'.$request->storage);
     }
 
     /**

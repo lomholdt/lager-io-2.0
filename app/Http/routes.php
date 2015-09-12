@@ -11,10 +11,12 @@
 |
 */
 
+Route::resource('/storage', 'StorageController');
 Route::resource('/', 'PageController');
+Route::get('/profile', 'ProfileController@index');
 
-// Storage Routes
-Route::resource('storage', 'StorageController');
+
+Route::resource('storage/{storageName}/inventory', 'InventoryController');
 
 Route::get('/home', [
 	'as' => '/', function () {
@@ -23,16 +25,15 @@ Route::get('/home', [
 
 Route::get('/test', function () {
     // return App\Storage::where('is_open', false)->with('company')->get();
-	$storage = App\Storage::find(1);
+	// $storage = App\Storage::find(1);
 	// return $storage->company->name;
-	return $storage->inventory;
+	return Auth::user()->company_id;
 });
 
 
 
 
-// Profile routes
-Route::get('/profile', 'ProfileController@index');
+
 
 // Authentication routes...
 Route::get('auth/login', 'Auth\AuthController@getLogin');

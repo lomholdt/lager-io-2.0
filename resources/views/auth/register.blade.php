@@ -14,7 +14,7 @@
     <div class="form-group">
     	<select name="company_id" id="inputCompany_id" class="form-control">
     		@foreach($companies as $company)
-    			<option value="{{$company->id}}">{{ $company->name }}</option>
+    			<option value="{{ $company->id }}">{{ $company->name }}</option>
     		@endforeach
     	</select>
     </div>

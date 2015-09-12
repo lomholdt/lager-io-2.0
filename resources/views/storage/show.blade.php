@@ -2,13 +2,14 @@
 
 @section('content')
 	
-	<h1>Storage - {{ $storage->name }}</h1>
+	<h1>Storage - {{ $storage->name }}</h1> <a href="/storage/{{ $storage->name }}/edit" class="btn btn-primary">Edit Storage</a>
 		<table class="table table-striped table-hover">
 			<thead>
 				<tr>
 					<th>Name</th>
 					<th>Units</th>
-					<th>Price</th>
+					<th>Sales Price</th>
+					<th>Retail Price</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -16,7 +17,8 @@
 				<tr>
 					<td> {{ $inventory->name }} </td>
 					<td> {{ $inventory->units }} </td>
-					<td> {{ $inventory->price }} </td>
+					<td> {{ $inventory->salesPrice }} </td>
+					<td> {{ $inventory->retailPrice }} </td>
 				</tr>
 			@endforeach
 			</tbody>

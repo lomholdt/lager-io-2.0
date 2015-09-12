@@ -46,4 +46,10 @@ class User extends Model implements AuthenticatableContract,
     {
         return $this->belongsToMany('App\Role');
     }
+
+    public function hasRole($role)
+    {
+        return $this->role == $role;
+
+    }
 }
