@@ -76,6 +76,6 @@ class AuthController extends Controller
      */
     protected function getCredentials(\Illuminate\Http\Request $request)
     {
-        return $request->only($this->loginUsername(), 'password');
+        return $request->only($this->loginUsername(), 'password', 'company');
     }
 }
